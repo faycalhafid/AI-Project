@@ -68,9 +68,9 @@ class GameProblem(SearchProblem):
            It also must set the values of the object attributes that the methods need, as for example, self.SHOPS or self.MAXBAGS
         '''
 
-        print '\nMAP: ', self.MAP, '\n'
-	print 'POSITIONS: ', self.POSITIONS, '\n'
-	print 'CONFIG: ', self.CONFIG, '\n'
+        print('\nMAP: ', self.MAP, '\n')
+        print('POSITIONS: ', self.POSITIONS, '\n')
+        print('CONFIG: ', self.CONFIG, '\n')
 
         initial_state = None
         final_state= None
@@ -129,7 +129,7 @@ class GameProblem(SearchProblem):
 
         initial_state,final_state,algorithm = self.setup()
         if initial_state == False:
-            print ('-- INITIALIZATION FAILED')
+            print('-- INITIALIZATION FAILED')
             return True
       
         self.INITIAL_STATE=initial_state
@@ -137,7 +137,7 @@ class GameProblem(SearchProblem):
         self.ALGORITHM=algorithm
         super(GameProblem,self).__init__(self.INITIAL_STATE)
             
-        print ('-- INITIALIZATION OK')
+        print('-- INITIALIZATION OK')
         return True
         
     # END initializeProblem 
