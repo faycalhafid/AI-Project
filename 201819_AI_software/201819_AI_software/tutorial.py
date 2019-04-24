@@ -33,17 +33,17 @@ class MapProblem(SearchProblem):
     # METHOD THAT GIVEN A STATE RETURNS A LIST OF THE APPLICABLE ACTIONS FOR SUCH STATE
     def actions(self, state):
         
-        return None
+        return self.mapProblem[state].keys()
 
     # METHOD THAT GIVEN A STATE AND AN ACTION RETURNS THE STATE REACHED AFTER APPLYING THE ACTIONS TO THE GIVEN STATE
     def result(self, state, action):
         
-        return None
+        return self.mapProblem[state][action]
 
     # METHOD THAT RETURNS TRUE IF THE GIVEN STATE IS THE GOAL STATE, OTHERWISE IT RETURNS FALSE
     def is_goal(self, state):
         
-        return False
+        return sate == self.final_state
    
     # METHOD THAT RETURNS THE COST OF APPLYING THE GIVEN ACTION IN THE GIVEN STATE WHEN REACHING STATE2
     def cost(self, state, action, state2):
@@ -86,12 +86,21 @@ def getTotalCost (problem,result):
 
 # -------------------------  PROBLEM SOLVING ----------------------
 
-initial_state = None
-final_state = None
-map_problem = None
+initial_state = "A"
+final_state = "H"
+sA=["B","C"]
+sB=["C","D"]
+sC=["E"]
+sD=["F","G"]
+sE=["G","H"]
+sF=[]
+sG=["H"]
+sH=[]
+map_problem = {"A":sA,"B":sB,"C":sC,"D":sD,"E":sE,"F":sF,"G":sG,"H":sH}
+
 
 problem = MapProblem(initial_state)
 problem.mapProblem = map_problem
 problem.final_state = final_state
-
-MapExercise(problem,algorithm=breadth_first,use_viewer=BaseViewer())
+print(problem.actions("A"))
+#MapExercise(problem,algorithm=breadth_first,use_viewer=BaseViewer())
