@@ -21,31 +21,44 @@ class GameProblem(SearchProblem):
     SHOPS=None
     CUSTOMERS=None
     MAXBAGS = 0
-
+    final_state=None
     MOVES = ('West','North','East','South')
 
    # --------------- Common functions to a SearchProblem -----------------
 
     def actions(self, state):
         '''Returns a LIST of the actions that may be executed in this state
-        '''
-        acciones = []
-        
-        return acciones
+        '''       
+	actions=[]
+	if state[1] > 0 and (state[0],state[1]-1) not in self.POSITIONS['building']:
+		actions.append('North')
+	if state[1] < 3 and (state[0],state[1]+1) not in self.POSITIONS['building']:
+		actions.append('South')
+	if state[0] > 0 and (state[0]-1,state[1]) not in self.POSITIONS['building']:
+		actions.append('West')
+	if state[0] < 9 and (state[0]+1,state[1]) not in self.POSITIONS['building']:
+		actions.append('East')
+	print('My possible actions are : '+str(actions))
+        return actions
     
 
     def result(self, state, action):
         '''Returns the state reached from this state when the given action is executed
         '''
-        next_state = 0
-
-        return next_state
+	if action=='North' :
+	        return (state[0],state[1]-1)
+	if action=='South' :
+	        return (state[0],state[1]+1)
+	if action=='East' :
+	        return (state[0]+1,state[1])
+	if action=='West' :
+	        return (state[0]-1,state[1])
 
 
     def is_goal(self, state):
         '''Returns true if state is the final state
         '''
-        return True
+        return state == self.final_state
 
     def cost(self, state, action, state2):
         '''Returns the cost of applying `action` from `state` to `state2`.
@@ -68,12 +81,12 @@ class GameProblem(SearchProblem):
            It also must set the values of the object attributes that the methods need, as for example, self.SHOPS or self.MAXBAGS
         '''
 
-        print('\nMAP: ', self.MAP, '\n')
-        print('POSITIONS: ', self.POSITIONS, '\n')
-        print('CONFIG: ', self.CONFIG, '\n')
+        print '\nMAP: ', self.MAP, '\n'
+	print 'POSITIONS: ', self.POSITIONS, '\n'
+	print 'CONFIG: ', self.CONFIG, '\n'
 
-        initial_state = None
-        final_state= None
+        initial_state = self.POSITIONS['start'][0]
+        final_state= self.POSITIONS['pizza'][0]
         algorithm= simpleai.search.astar
         #algorithm= simpleai.search.breadth_first
         #algorithm= simpleai.search.depth_first
@@ -129,16 +142,16 @@ class GameProblem(SearchProblem):
 
         initial_state,final_state,algorithm = self.setup()
         if initial_state == False:
-            print('-- INITIALIZATION FAILED')
+            print ('-- INITIALIZATION FAILED')
             return True
       
         self.INITIAL_STATE=initial_state
+	self.final_state=final_state
         self.GOAL=final_state
         self.ALGORITHM=algorithm
         super(GameProblem,self).__init__(self.INITIAL_STATE)
             
-        print('-- INITIALIZATION OK')
+        print ('-- INITIALIZATION OK')
         return True
         
     # END initializeProblem 
-
