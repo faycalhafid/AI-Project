@@ -253,7 +253,6 @@ def main():
 
         # In this point we have planned in advance for the objective
         # The plan is stored in a global (aiPlan)
-        
         if len(aiPlan)>0 and not state['inPause']:
             nextElement = aiPlan.pop(0) 
             nextAction = nextElement[0]
