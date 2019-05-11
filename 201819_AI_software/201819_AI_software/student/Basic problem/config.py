@@ -3,8 +3,8 @@ configuration = {
 "tile_size": 80, 
 "type": "load", #random
 "seed": None,
-"file": "./student/map.txt",
-"map_size": [10, 5],
+"file": "./student/Basic problem/map.txt",
+"map_size": [30, 15],
 "delay": 0.1,
 "debugMap": False,
 "debug": False,

@@ -33,7 +33,8 @@ def depth_first(problem, graph_search=False, viewer=None):
                    viewer=viewer)
 
 
-def limited_depth_first(problem, depth_limit, graph_search=False, viewer=None):
+#def limited_depth_first(problem, depth_limit, graph_search=False, viewer=None):
+def limited_depth_first(problem, graph_search=False, viewer=None):
     '''
     Limited depth first search.
 
@@ -45,7 +46,7 @@ def limited_depth_first(problem, depth_limit, graph_search=False, viewer=None):
     return _search(problem,
                    LifoList(),
                    graph_search=graph_search,
-                   depth_limit=depth_limit,
+                   depth_limit=30,
                    viewer=viewer)
 
 

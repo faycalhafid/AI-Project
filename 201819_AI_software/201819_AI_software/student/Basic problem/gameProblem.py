@@ -7,6 +7,9 @@
 from simpleai.search import SearchProblem
 # from simpleai.search import breadth_first,depth_first,astar,greedy
 import simpleai.search
+import sys,os
+sys.path.append(os.path.abspath("../Basic problem"))
+from config import configuration
 
 class GameProblem(SearchProblem):
     # Object attributes, can be accessed in the methods below
@@ -31,13 +34,15 @@ class GameProblem(SearchProblem):
         '''
         actions=[]
         pos=state[0]
+        if 'building' not in self.POSITIONS.keys():
+            self.POSITIONS['building']=[]
         if pos[1] > 0 and (pos[0],pos[1]-1) not in self.POSITIONS['building']:
             actions.append('North')
-        if pos[1] < 3 and (pos[0],pos[1]+1) not in self.POSITIONS['building']:
+        if pos[1] < configuration["map_size"][1]-1 and (pos[0],pos[1]+1) not in self.POSITIONS['building']:
             actions.append('South')
         if pos[0] > 0 and (pos[0]-1,pos[1]) not in self.POSITIONS['building']:
             actions.append('West')
-        if pos[0] < 9 and (pos[0]+1,pos[1]) not in self.POSITIONS['building']:
+        if pos[0] < configuration["map_size"][0]-1 and (pos[0]+1,pos[1]) not in self.POSITIONS['building']:
             actions.append('East')
         if pos in self.SHOPS and state[1] < self.MAXBAGS :
             actions.append('Load')
@@ -93,7 +98,7 @@ class GameProblem(SearchProblem):
         if state[2]==0 : #if no pending requests, we just need to go back to the start
             cost=self.manhattan_distance(pos1,pos2)
         else : #we have pending requests
-            if state[1]==self.GOAL[2]: #if we already loaded the pizzas, we need to deliver them and unload them
+            if state[1]>= state[2]: #if we already loaded the pizzas, we need to deliver them and unload them
                 cost = self.manhattan_distance(pos1,self.CUSTOMERS[0])+self.manhattan_distance(self.CUSTOMERS[0],pos2) + 1
             else : #we need to pick up pizzas first
                 cost = self.manhattan_distance(pos1, self.SHOPS[0]) + self.manhattan_distance(self.SHOPS[0],self.CUSTOMERS[0]) + \
@@ -115,10 +120,10 @@ class GameProblem(SearchProblem):
 
         initial_state = (self.POSITIONS['start'][0],0,2)
         final_state= (self.POSITIONS['start'][0],0,0)
-        algorithm= simpleai.search.astar
+        #algorithm= simpleai.search.astar
         #algorithm= simpleai.search.breadth_first
         #algorithm= simpleai.search.depth_first
-        #algorithm= simpleai.search.limited_depth_first
+        algorithm= simpleai.search.limited_depth_first
         return initial_state,final_state,algorithm
         
     def printState (self,state):
@@ -132,8 +137,12 @@ class GameProblem(SearchProblem):
         '''
         #if state in self.POSITIONS['customer1'] :
         #    return len(self.POSITIONS['customer1'])
-        if state in self.POSITIONS['customer2'] :
-            return len(self.POSITIONS['customer2'])
+        if 'customer1' in self.POSITIONS.keys():
+            if state in self.POSITIONS['customer1'] :
+                return 1
+        if 'customer2' in self.POSITIONS.keys():
+            if state in self.POSITIONS['customer2'] :
+                return 2
         return None
 
     # -------------------------------------------------------------- #

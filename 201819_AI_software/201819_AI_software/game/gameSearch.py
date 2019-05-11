@@ -46,7 +46,8 @@ def searchSolution(map,configuration,state,aiBaseName,tracep):
     print (problem.ALGORITHM)
     
     print ("-------------   EXECUTING SEARCH   -------------------")
-    result = algorithm(problem,graph_search=True,viewer=useViewer)
+    result = algorithm(problem,graph_search=True,depth_limit=90,viewer=useViewer)
+    #result = algorithm(problem, graph_search=True, viewer=useViewer)
 
     
     if result:
